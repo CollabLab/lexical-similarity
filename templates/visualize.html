@@ -1,0 +1,161 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>Similarity - Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/custom.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="../static/js/dygraph-combined-dev.js"></script>
+</head>
+<body>
+	{{ navbar|safe }}
+    <div class="container">
+    	<div calss="row">
+    	    <div class="col-lg-12">
+    	        <h1 class="page-header">Data Visualization&nbsp;
+    	            <small>Lexical Similarity</small>
+    	        </h1>
+    	        <ol class="breadcrumb">
+    	            <li><a href="/">Home</a></li>
+    	            <li class="active">Visualize Data</li>
+    	        </ol>
+    	    </div>
+    	</div>
+    	<div class="row">
+    	    <div class="col-lg-12 text-center">
+    	        <a href="/visualize/graph" class= "btn btn-default">
+    	          Visualize Lexical Similarity
+    	        </a>
+    	        <p>
+    	          <small>
+    	            Upload your conversation to visualize lexical similarity
+    	          </small>
+    	        </p>
+    	    </div>
+    	</div>
+    	<div class="row">
+    	    <div class="col-lg-12 text-center">
+    	        <h2>Examples</h2>
+    	    </div>
+    	</div>
+    	<div class="row">
+    	    <div class="col-lg-12">
+    	        <h4>Similarity through a conversation</h4>
+    	    </div>
+    	</div>
+    	<div class="row">
+    	    <div class="col-md-9">
+    	    	<div id="graph" style="width:700px;"></div>
+    	        <p>Explanation</p>
+    	    </div>
+            <div class="col-md-3">
+                <div id="annotation">
+                </div>
+            </div>
+    	</div>
+    </div>
+    <script type="text/javascript">
+        // lexical similarity to generate the graph
+        var data = {{ data|safe }}
+
+        // formatted turn by turn conversation. tbt[0] = turn 1
+        var tbt = {{ tbt|safe }}
+        document.getElementById("annotation").innerHTML = buildAnnotation(tbt);
+
+        // index of maximum similarity values
+        var max = {{ max|safe }}
+        var secondMax = {{ secondMax|safe }}
+        var thirdMax = {{ thirdMax|safe }}
+
+        // var annotationMax = function () {
+        //     var text = buildAnnotation(max, tbt)
+        //     document.getElementById("annotation").innerHTML = text;
+        //     document.getElementById('annotation').style.display = "block"
+        // }
+
+        // var annotationSecondMax = function () {
+        //     var text = buildAnnotation(secondMax, tbt)
+        //     document.getElementById("annotation").innerHTML = text;
+        //     document.getElementById('annotation').style.display = "block"
+        // }
+
+        // var annotationThirdMax = function () {
+        //     var text = buildAnnotation(thirdMax, tbt)
+        //     document.getElementById("annotation").innerHTML = text;
+        //     document.getElementById('annotation').style.display = "block"
+        // }
+
+        function buildAnnotation(tbtConv){
+            var text = "<div class='annotation'>";
+
+            // if (turn-1 >= 0) {
+            //     var index = turn-1;
+            // }
+            // else {
+            //     var index = turn;
+            // }
+
+            // if (turn+1 < tbt.length) {
+            //     var end = turn+1;
+            // }
+            // else {
+            //     var end = turn;
+            // }
+
+            for (var index =0; index < tbtConv.length; index++) {
+                text += tbtConv[index] + "<br />";
+            }
+            text += "</div>";
+
+            return text;
+        }
+
+        g = new Dygraph(
+          document.getElementById("graph"),
+            data,
+              {
+                labels: [ "Turn", "Similarity"],
+                ylabel: 'Similarity',
+                xlabel: 'Turn Number',
+                digitsAfterDecimal: 5
+            }     
+        );
+        // g.ready(function() {
+        //     g.setAnnotations([
+        //     { 
+        //       series: "Similarity",
+        //       x: max,
+        //       shortText: max,
+        //       text: "Click here",
+        //       clickHandler: annotationMax
+        //     },
+        //     {
+        //       series: "Similarity",
+        //       x: secondMax,
+        //       shortText: secondMax,
+        //       text: "Click here",
+        //       clickHandler: annotationSecondMax
+        //     },
+        //     {
+        //       series: "Similarity",
+        //       x: thirdMax,
+        //       shortText: thirdMax,
+        //       text: "Click here",
+        //       clickHandler: annotationThirdMax,
+        //     }
+        //     ]);
+        //   });
+        g.updateOptions( {
+            highlightCallback: function(event, x, points, row, seriesName) {
+                document.getElementById('annotation').innerHTML = "<div class='annotation'>"+tbt[x-4]+"<br>"+tbt[x-3]+"<br>"+tbt[x-2]+"<br>"+tbt[x-1]+"</div>";
+            },
+            unhighlightCallback: function(event) {
+                document.getElementById('annotation').innerHTML = buildAnnotation(tbt); 
+            }
+        });
+    </script>
+    {{ footer|safe }}
+</body>
+</html>
