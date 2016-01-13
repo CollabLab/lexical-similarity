@@ -75,21 +75,13 @@ def graph_post():
         tbtToken = build_turnbyturntokens(conversation);
         similarity = computetbtsimilarities(tbtToken, windowweights, idf)
 
-        # get the index of max similarity
-        max_value = max(similarity)
-        max_index = similarity.index(max_value)
-
-        # get the index of second max similarity
-        second_max = sorted(similarity)[-2]
-        second_max_index = similarity.index(second_max)
-
         # format similarity array so that it can be read by dygraph. 
         # ex: [65,76,86] --> [[0, 65], [1, 76], [2,86]]
         data = normalizeData(similarity)
 
         tbtConversation = turnByTurn(conversation)
 
-        return render_template('generated-graph.html', data=data, tbt=tbtConversation, max=max_index, secondMax = second_max_index, navbar=navbar, footer=footer)
+        return render_template('generated-graph.html', data=data, tbt=tbtConversation, navbar=navbar, footer=footer)
     else:
         return "ERROR: File extension not acceptable"
 

@@ -29,7 +29,7 @@
                 <div id="graphdiv" style="width:700px;"></div>
             </div>
             <div class="col-md-3">
-                <div id= "annotation" class="annotation">
+                <div id= "annotation">
                 </div>
             </div>
         </div>
@@ -39,45 +39,15 @@
 
         // formatted turn by turn conversation. tbt[0] = turn 1
         var tbt = {{ tbt|safe }}
+        document.getElementById("annotation").innerHTML = buildAnnotation(tbt);
 
-        // index of maximum similarity values
-        var max = {{ max|safe }}
-        var secondMax = {{ secondMax|safe }}
+        function buildAnnotation(tbtConv){
+            var text = "<div class='annotation'>";
 
-        var annotationMax = function () {
-            var text = buildAnnotation(max, tbt)
-            document.getElementById("annotation").innerHTML = text;
-            document.getElementById('annotation').style.display = "block"
-        }
-
-        var annotationSecondMax = function () {
-            var text = buildAnnotation(secondMax, tbt)
-            document.getElementById("annotation").innerHTML = text;
-            document.getElementById('annotation').style.display = "block"
-        }
-
-        function buildAnnotation(turnIndex, tbtConv){
-            var turn = turnIndex-1
-            var text = "<h4>Turn "+turnIndex+"</h4><ul>";
-
-            if (turn-1 >= 0) {
-                var index = turn-1;
+            for (var index =0; index < tbtConv.length; index++) {
+                text += "<span style='font-weight: bold;'> "+(index+1) + "</span> "+tbtConv[index] + "<br />";
             }
-            else {
-                var index = turn;
-            }
-
-            if (turn+1 < tbt.length) {
-                var end = turn+1;
-            }
-            else {
-                var end = turn;
-            }
-
-            for (index; index <= end; index++) {
-                text += "<li>" + tbt[index] + "</li>";
-            }
-            text += "</ul>";
+            text += "</div>";
 
             return text;
         }
@@ -93,24 +63,14 @@
                 digitsAfterDecimal: 5
             }     
         );
-        g.ready(function() {
-            g.setAnnotations([
-            {
-              series: "Similarity",
-              x: max,
-              shortText: max,
-              text: "Click here",
-              clickHandler: annotationMax
+        g.updateOptions( {
+            highlightCallback: function(event, x, points, row, seriesName) {
+                document.getElementById('annotation').innerHTML = "<div class='annotation'>"+tbt[x-4]+"<br>"+tbt[x-3]+"<br>"+tbt[x-2]+"<br>"+tbt[x-1]+"</div>";
             },
-            {
-              series: "Similarity",
-              x: secondMax,
-              shortText: secondMax,
-              text: "Click here",
-              clickHandler: annotationSecondMax
+            unhighlightCallback: function(event) {
+                document.getElementById('annotation').innerHTML = buildAnnotation(tbt); 
             }
-            ]);
-          });
+        });
     </script>
     </div>
     {{ footer|safe }}
