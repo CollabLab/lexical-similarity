@@ -411,14 +411,11 @@ fieldset[disabled] .btn-info.active {
 .annotation {
   border: 1px solid #008080;
   padding: 10px;
-  height: 250px;
-  overflow: scroll;
+  height: 275px;
+  box-shadow: 10px 10px 25px #888888;
+  overflow: auto;
 }
 .highlight {
-  font-size: 34px;
+  background-color: #329999;
+  color: #FFFFFF;
 }
-/*.annotation ul, .annotation li{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}*/

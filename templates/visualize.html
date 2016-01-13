@@ -68,7 +68,7 @@
             var text = "<div class='annotation'>";
 
             for (var index =0; index < tbtConv.length; index++) {
-                text += "<span style='font-weight: bold;'> "+(index+1) + "</span> "+tbtConv[index] + "<br />";
+                text += '<span id='+(index+1)+'>' + tbtConv[index] + "</span><br />";
             }
             text += "</div>";
 
@@ -85,12 +85,30 @@
                 digitsAfterDecimal: 5
             }     
         );
+        function unhighlight () {
+            for (var index=1; index <= tbt.length; index++ ){
+                document.getElementById(index).className = "";
+            }
+        }
         g.updateOptions( {
             highlightCallback: function(event, x, points, row, seriesName) {
-                document.getElementById('annotation').innerHTML = "<div class='annotation'>"+tbt[x-4]+"<br>"+tbt[x-3]+"<br>"+tbt[x-2]+"<br>"+tbt[x-1]+"</div>";
+                // document.getElementById('annotation').innerHTML = "<div class='annotation'>"+tbt[x-4]+"<br>"+tbt[x-3]+"<br>"+tbt[x-2]+"<br>"+tbt[x-1]+"</div>";
+                unhighlight();
+                var target;
+                if (x > 0){
+                    if((x-1))
+                    if ((x-1)>0 && (x-2)>0 && (x-3)>0){
+                        document.getElementById(x).className = "highlight";
+                        document.getElementById(x-1).className = "highlight";
+                        document.getElementById(x-2).className = "highlight";
+                        document.getElementById(x-3).className = "highlight";
+                        target = document.getElementById(x-3);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }
+                }
             },
             unhighlightCallback: function(event) {
-                document.getElementById('annotation').innerHTML = buildAnnotation(tbt); 
+                unhighlight(); 
             }
         });
     </script>
