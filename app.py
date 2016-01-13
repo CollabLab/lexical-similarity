@@ -41,22 +41,13 @@ def visualize():
     tbtToken = build_turnbyturntokens(conv);
     similarity = computetbtsimilarities(tbtToken, windowweights, idf)
 
-    # get the index of max similarity
-    max_value = max(similarity)
-    max_index = similarity.index(max_value)
-
-    # get the index of second max similarity
-    second_max = sorted(similarity)[-2]
-    second_max_index = similarity.index(second_max)
-
-    # get the index of third max similarity
-    third_max = sorted(similarity)[-3]
-    third_max_index = similarity.index(third_max)
-
+    # change similarity array into dygraphs data format
     data = normalizeData(similarity)
+
+    # turn by turn conversation
     tbtConversation = turnByTurn(conv)
 
-    return render_template('visualize.html', data=data, tbt=tbtConversation, max=max_index, secondMax = second_max_index, thirdMax = third_max_index, navbar=navbar, footer=footer)
+    return render_template('visualize.html', data=data, tbt=tbtConversation, navbar=navbar, footer=footer)
 
 @app.route('/about')
 def about():
