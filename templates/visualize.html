@@ -96,13 +96,30 @@
                 unhighlight();
                 var target;
                 if (x > 0){
-                    if((x-1))
                     if ((x-1)>0 && (x-2)>0 && (x-3)>0){
                         document.getElementById(x).className = "highlight";
                         document.getElementById(x-1).className = "highlight";
                         document.getElementById(x-2).className = "highlight";
                         document.getElementById(x-3).className = "highlight";
                         target = document.getElementById(x-3);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }
+                    else if ((x-1)>0 && (x-2)>0 && (x-3)<=0){
+                        document.getElementById(x).className = "highlight";
+                        document.getElementById(x-1).className = "highlight";
+                        document.getElementById(x-2).className = "highlight";
+                        target = document.getElementById(x-2);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }
+                    else if ((x-1)>0 && (x-2)<=0 && (x-3)<=0){
+                        document.getElementById(x).className = "highlight";
+                        document.getElementById(x-1).className = "highlight";
+                        target = document.getElementById(x-1);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }
+                    else if ((x-1)<=0 && (x-2)<=0 && (x-3)<=0){
+                        document.getElementById(x).className = "highlight";
+                        target = document.getElementById(x);
                         target.parentNode.scrollTop = target.offsetTop;
                     }
                 }
