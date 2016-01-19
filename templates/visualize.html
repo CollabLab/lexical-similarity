@@ -47,14 +47,26 @@
     	</div>
     	<div class="row">
     	    <div class="col-md-8">
-    	    	<div id="graph" style="width: 100%"></div>
-    	        <p>Explanation</p>
+    	    	<div id="graph" style="width: 100%; margin-bottom: 15px;"></div>
     	    </div>
             <div class="col-md-4">
                 <div id="annotation">
                 </div>
             </div>
     	</div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <h2>Lexical Similarity</h2>
+                <div class="intro">
+                    <p>Two friends, Alice and Bob, are engaged in an instant message conversation. They greet each other using the exact same word. They both use “Hey” instead of one person saying “Hey” and the other saying “Hi”, which results in a peak in our measure near the beginning of the graph. As they begin to talk about Alice’s broken necklace, we see that clarifying where the necklace broke results in an uptick in similarity. This stems from repeated use of the term “the chain” even when a pronoun would suffice. We then come to an example of repeating a partner’s words even when not necessary, presumably because it serves a social function. In the discussion about vices, Bob could have just asked, “What’s that?”, but he didn’t, instead repeating “Veronica Mars” along with other of Alice’s words. Finally, we see lexical similarity resulting from similar valedictions, both containing “’night”.</p>
+                    <h4 style="font-style: italic;">Turn</h4>
+                    <p>We computed a vector of weighted term frequencies at each turn in a conversation. A turn is a transmission or series of consecutive transmissions by one sender. Since it's common for one person to hold the floor for multiple consecutive transmissions, we treat a full turn as a single point in time, even if it spans multiple transmissions.</p>
+                    <h4 style="font-style: italic;">Windowing</h4>
+                    <p>Conversations unfold over time, so we used a sliding window to evaluate local similarity. We used a linear, four-turn-wide window that trailed turn <span style="font-style: italic;">t</span>, the value of which was used to weight the relevant term frequencies.</p>
+                    <p class="text-center">window(t) = - <sup>1</sup>&frasl;<sub>4</sub> t + 1</p>
+                </div>
+            </div>
+        </div>
     </div>
     <script type="text/javascript">
         // lexical similarity to generate the graph
