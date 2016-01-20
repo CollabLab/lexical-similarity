@@ -409,13 +409,18 @@ fieldset[disabled] .btn-info.active {
   padding: 20px;
 }
 .annotation {
-  border: 1px solid #008080;
   padding: 10px;
   height: 275px;
-  box-shadow: 10px 10px 25px #888888;
   overflow: auto;
+  background-color: #fafafa;
+  border-radius: 5px;
 }
-.highlight {
+.turn-highlight {
   background-color: #329999;
-  color: #FFFFFF;
+  font-weight: 300;
+  border-radius: 10px;
+}
+.window-highlight {
+  background-color: #98cccc;
+  border-radius: 10px;
 }
