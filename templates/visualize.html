@@ -47,7 +47,7 @@
     	</div>
     	<div class="row">
     	    <div class="col-md-8">
-    	    	<div id="graph" style="width: 100%; margin-bottom: 15px;"></div>
+    	    	<div id="graph" style="width: 100%; margin-bottom: 25px;"></div>
     	    </div>
             <div class="col-md-4">
                 <div id="annotation">
@@ -100,7 +100,7 @@
             return text;
         }
         function mouseover (x) {
-            x.className = "highlight";
+            x.className = "turn-highlight";
             g.setSelection(x.id);
         }
         function mouseout (x) {
@@ -112,8 +112,11 @@
                 document.getElementById(index).removeAttribute("class");
             }
         }
-        function highlight (x) {
-            document.getElementById(x).className = "highlight";
+        function highlightTurn (x) {
+            document.getElementById(x).className = "turn-highlight";
+        }
+        function highlightWindow (x) {
+            document.getElementById(x).className = "window-highlight";
         }
         g.updateOptions( {
             highlightCallback: function(event, x, points, row, seriesName) {
@@ -121,25 +124,25 @@
                 var target;
                 if (x > 0){
                     if (x==1){
-                        highlight(1);   
+                        highlightTurn(1);   
                         target = document.getElementById(1);
                         target.parentNode.scrollTop = target.offsetTop;
                     }else if (x==2) {
-                        highlight(2);
-                        highlight(1);
+                        highlightTurn(2);
+                        highlightWindow(1);
                         target = document.getElementById(1);
                         target.parentNode.scrollTop = target.offsetTop;
                     }else if (x==3) {
-                        highlight(3);
-                        highlight(2);
-                        highlight(1);
+                        highlightTurn(3);
+                        highlightWindow(2);
+                        highlightWindow(1);
                         target = document.getElementById(1);
                         target.parentNode.scrollTop = target.offsetTop;
                     }else {
-                        highlight(x);
-                        highlight(x-1);
-                        highlight(x-2);
-                        highlight(x-3);
+                        highlightTurn(x);
+                        highlightWindow(x-1);
+                        highlightWindow(x-2);
+                        highlightWindow(x-3);
                         target = document.getElementById(x-3);
                         target.parentNode.scrollTop = target.offsetTop;
                     }
