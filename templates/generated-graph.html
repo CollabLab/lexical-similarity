@@ -68,34 +68,37 @@
                 document.getElementById(index).className = "";
             }
         }
+        function highlight (x) {
+            document.getElementById(x).className = "highlight";
+        }
         g.updateOptions( {
             highlightCallback: function(event, x, points, row, seriesName) {
                 unhighlight();
                 var target;
                 if (x > 0){
                     if ((x-1)>0 && (x-2)>0 && (x-3)>0){
-                        document.getElementById(x).className = "highlight";
-                        document.getElementById(x-1).className = "highlight";
-                        document.getElementById(x-2).className = "highlight";
-                        document.getElementById(x-3).className = "highlight";
+                        highlight(x);
+                        highlight(x-1);
+                        highlight(x-2);
+                        highlight(x-3);
                         target = document.getElementById(x-3);
                         target.parentNode.scrollTop = target.offsetTop;
                     }
                     else if ((x-1)>0 && (x-2)>0 && (x-3)<=0){
-                        document.getElementById(x).className = "highlight";
-                        document.getElementById(x-1).className = "highlight";
-                        document.getElementById(x-2).className = "highlight";
+                        highlight(x);
+                        highlight(x-1);
+                        highlight(x-2);
                         target = document.getElementById(x-2);
                         target.parentNode.scrollTop = target.offsetTop;
                     }
                     else if ((x-1)>0 && (x-2)<=0 && (x-3)<=0){
-                        document.getElementById(x).className = "highlight";
-                        document.getElementById(x-1).className = "highlight";
+                        highlight(x);
+                        highlight(x-1);
                         target = document.getElementById(x-1);
                         target.parentNode.scrollTop = target.offsetTop;
                     }
                     else if ((x-1)<=0 && (x-2)<=0 && (x-3)<=0){
-                        document.getElementById(x).className = "highlight";
+                        highlight(x);
                         target = document.getElementById(x);
                         target.parentNode.scrollTop = target.offsetTop;
                     }
