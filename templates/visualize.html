@@ -93,11 +93,19 @@
             var text = "<div class='annotation'>";
 
             for (var index =0; index < tbtConv.length; index++) {
-                text += '<span id='+(index+1)+'>' + tbtConv[index] + "</span><br />";
+                text += '<span onmouseover="mouseover(this)" onmouseout="mouseout(this)"id='+(index+1)+'>' + tbtConv[index] + "</span><br />";
             }
             text += "</div>";
 
             return text;
+        }
+        function mouseover (x) {
+            x.className = "highlight";
+            g.setSelection(x.id);
+        }
+        function mouseout (x) {
+            x.removeAttribute("class");
+            g.clearSelection();
         }
         function unhighlight () {
             for (var index=1; index <= tbt.length; index++ ){
