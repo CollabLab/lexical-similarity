@@ -101,7 +101,7 @@
         }
         function unhighlight () {
             for (var index=1; index <= tbt.length; index++ ){
-                document.getElementById(index).className = "";
+                document.getElementById(index).removeAttribute("class");
             }
         }
         function highlight (x) {
