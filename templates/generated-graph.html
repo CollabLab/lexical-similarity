@@ -76,30 +76,27 @@
                 unhighlight();
                 var target;
                 if (x > 0){
-                    if ((x-1)>0 && (x-2)>0 && (x-3)>0){
+                    if (x==1){
+                        highlight(1);   
+                        target = document.getElementById(1);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }else if (x==2) {
+                        highlight(2);
+                        highlight(1);
+                        target = document.getElementById(1);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }else if (x==3) {
+                        highlight(3);
+                        highlight(2);
+                        highlight(1);
+                        target = document.getElementById(1);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }else {
                         highlight(x);
                         highlight(x-1);
                         highlight(x-2);
                         highlight(x-3);
                         target = document.getElementById(x-3);
-                        target.parentNode.scrollTop = target.offsetTop;
-                    }
-                    else if ((x-1)>0 && (x-2)>0 && (x-3)<=0){
-                        highlight(x);
-                        highlight(x-1);
-                        highlight(x-2);
-                        target = document.getElementById(x-2);
-                        target.parentNode.scrollTop = target.offsetTop;
-                    }
-                    else if ((x-1)>0 && (x-2)<=0 && (x-3)<=0){
-                        highlight(x);
-                        highlight(x-1);
-                        target = document.getElementById(x-1);
-                        target.parentNode.scrollTop = target.offsetTop;
-                    }
-                    else if ((x-1)<=0 && (x-2)<=0 && (x-3)<=0){
-                        highlight(x);
-                        target = document.getElementById(x);
                         target.parentNode.scrollTop = target.offsetTop;
                     }
                 }
