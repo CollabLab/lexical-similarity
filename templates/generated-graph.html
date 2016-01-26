@@ -64,11 +64,11 @@
             }     
         );
         function mouseover (x) {
-            x.className = "turn-highlight";
+            highlight(x.id, true);
             g.setSelection(x.id);
         }
         function mouseout (x) {
-            x.removeAttribute("class");
+            unhighlight();
             g.clearSelection();
         }
         function unhighlight () {
@@ -78,29 +78,38 @@
         }
         function highlight (x) {
             var target;
+            mouseover = mouseover || false;
             if (x > 0){
                 if (x==1){
-                    highlightTurn(1);   
-                    target = document.getElementById(1);
-                    target.parentNode.scrollTop = target.offsetTop;
+                    highlightTurn(1);
+                    if (!mouseover){   
+                        target = document.getElementById(1);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }
                 }else if (x==2) {
                     highlightTurn(2);
                     highlightWindow(1);
-                    target = document.getElementById(1);
-                    target.parentNode.scrollTop = target.offsetTop;
+                    if(!mouseover){
+                        target = document.getElementById(1);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }
                 }else if (x==3) {
                     highlightTurn(3);
                     highlightWindow(2);
                     highlightWindow(1);
-                    target = document.getElementById(1);
-                    target.parentNode.scrollTop = target.offsetTop;
+                    if(!mouseover){
+                        target = document.getElementById(1);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }
                 }else {
                     highlightTurn(x);
                     highlightWindow(x-1);
                     highlightWindow(x-2);
                     highlightWindow(x-3);
-                    target = document.getElementById(x-3);
-                    target.parentNode.scrollTop = target.offsetTop;
+                    if(!mouseover){
+                        target = document.getElementById(x-3);
+                        target.parentNode.scrollTop = target.offsetTop;
+                    }
                 }
             }
         }
