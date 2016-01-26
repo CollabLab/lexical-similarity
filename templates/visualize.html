@@ -112,6 +112,34 @@
                 document.getElementById(index).removeAttribute("class");
             }
         }
+        function highlight (x) {
+            var target;
+            if (x > 0){
+                if (x==1){
+                    highlightTurn(1);   
+                    target = document.getElementById(1);
+                    target.parentNode.scrollTop = target.offsetTop;
+                }else if (x==2) {
+                    highlightTurn(2);
+                    highlightWindow(1);
+                    target = document.getElementById(1);
+                    target.parentNode.scrollTop = target.offsetTop;
+                }else if (x==3) {
+                    highlightTurn(3);
+                    highlightWindow(2);
+                    highlightWindow(1);
+                    target = document.getElementById(1);
+                    target.parentNode.scrollTop = target.offsetTop;
+                }else {
+                    highlightTurn(x);
+                    highlightWindow(x-1);
+                    highlightWindow(x-2);
+                    highlightWindow(x-3);
+                    target = document.getElementById(x-3);
+                    target.parentNode.scrollTop = target.offsetTop;
+                }
+            }
+        }
         function highlightTurn (x) {
             document.getElementById(x).className = "turn-highlight";
         }
@@ -121,32 +149,7 @@
         g.updateOptions( {
             highlightCallback: function(event, x, points, row, seriesName) {
                 unhighlight();
-                var target;
-                if (x > 0){
-                    if (x==1){
-                        highlightTurn(1);   
-                        target = document.getElementById(1);
-                        target.parentNode.scrollTop = target.offsetTop;
-                    }else if (x==2) {
-                        highlightTurn(2);
-                        highlightWindow(1);
-                        target = document.getElementById(1);
-                        target.parentNode.scrollTop = target.offsetTop;
-                    }else if (x==3) {
-                        highlightTurn(3);
-                        highlightWindow(2);
-                        highlightWindow(1);
-                        target = document.getElementById(1);
-                        target.parentNode.scrollTop = target.offsetTop;
-                    }else {
-                        highlightTurn(x);
-                        highlightWindow(x-1);
-                        highlightWindow(x-2);
-                        highlightWindow(x-3);
-                        target = document.getElementById(x-3);
-                        target.parentNode.scrollTop = target.offsetTop;
-                    }
-                }
+                highlight(x);
             },
             unhighlightCallback: function(event) {
                 unhighlight(); 
